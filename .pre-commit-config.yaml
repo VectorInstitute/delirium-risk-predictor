@@ -33,11 +33,26 @@ repos:
         types: [python]
         exclude: 'tests'
 
-  - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.8.5
+  - repo: local
     hooks:
-      - id: nbqa-ruff
-        args: [--fix, --exit-non-zero-on-fix]
+      - id: prettier-js-format
+        name: prettier-js-format
+        entry: npm run format:fix
+        files: 'app/'
+        language: node
+        types: [javascript]
+        additional_dependencies:
+          - npm
+          - prettier
+
+  - repo: local
+    hooks:
+      - id: nextjs-lint
+        name: Next.js Lint
+        entry: npm run lint
+        language: system
+        types: [javascript, jsx, tsx]
+        pass_filenames: false
 
 ci:
   autofix_commit_msg: |
@@ -48,5 +63,5 @@ ci:
   autoupdate_branch: ''
   autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
   autoupdate_schedule: weekly
-  skip: [pytest, doctest, mypy]
+  skip: [mypy]
   submodules: false
