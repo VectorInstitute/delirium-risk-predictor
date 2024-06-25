@@ -7,6 +7,7 @@ This is a Next.js application that predicts the risk of delirium based on variou
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - Node.js (version 14 or later)
 - npm (usually comes with Node.js)
 
@@ -25,7 +26,6 @@ git clone git@github.com:VectorInstitute/delirium-risk-predictor.git
 ```bash
 cd delirium-risk-predictor
 ```
-
 
 3. Install the dependencies:
 

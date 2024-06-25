@@ -4,10 +4,10 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://0.0.0.0:8001/:path*' // Proxy to Backend
-      }
+        destination: 'http://0.0.0.0:8001/:path*', // Proxy to Backend
+      },
     ]
-  }
-};
+  },
+}
 
-export default nextConfig;
+export default nextConfig

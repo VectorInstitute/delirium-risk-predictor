@@ -38,3 +38,5 @@ next-env.d.ts
 # python
 .python-version
 **__pycache__**
+.mypy_cache/
+.venv/
