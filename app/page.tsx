@@ -9,13 +9,25 @@ export default function Home() {
   const [results, setResults] = useState(null);
 
   const handleSubmit = async (formData) => {
-    // TODO: Implement API call
-    // For now, let's just simulate a response
-    setResults({
-      riskScore: 0.35,
-      riskCategory: "Moderate",
-      recommendation: "Implement preventive measures"
-    });
+    try {
+      const response = await fetch('/api/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ features: Object.values(formData) }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle error (e.g., show error message to user)
+    }
   };
 
   return (
