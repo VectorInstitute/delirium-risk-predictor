@@ -9,13 +9,50 @@ export default function Home() {
   const [results, setResults] = useState(null);
 
   const handleSubmit = async (formData) => {
-    // TODO: Implement API call
-    // For now, let's just simulate a response
-    setResults({
-      riskScore: 0.35,
-      riskCategory: "Moderate",
-      recommendation: "Implement preventive measures"
-    });
+    // Convert checkbox values to booleans and numeric fields to numbers
+    const features = [
+      formData.Ground_Ambulance ? 1 : 0,
+      formData.diag_Other_specified_status ? 1 : 0,
+      formData.diag_Hepatic_failure ? 1 : 0,
+      formData.diag_Nervous_system_signs_and_symptoms ? 1 : 0,
+      formData.diag_Other_aftercare_encounter ? 1 : 0,
+      formData.diag_Parkinsons_disease ? 1 : 0,
+      formData.diag_Alcohol_related_disorders ? 1 : 0,
+      formData.diag_Other_specified_and_unspecified_liver_disease ? 1 : 0,
+      formData.diag_Septicemia ? 1 : 0,
+      formData.diag_Schizophrenia_spectrum_and_other_psychotic_disorders ? 1 : 0,
+      formData.diag_Symptoms_of_mental_and_substance_use_conditions ? 1 : 0,
+      parseFloat(formData.lab_numeric_only_max_Albumin_in_Urine) || 0,
+      formData.diag_Respiratory_failure_insufficiency_arrest ? 1 : 0,
+      formData.diag_Pressure_ulcer_of_skin ? 1 : 0,
+      formData.diag_Genitourinary_signs_and_symptoms ? 1 : 0
+    ];
+
+    try {
+      const response = await fetch('/api/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ features }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json();
+        console.error('Error details:', errorBody);
+        throw new Error('Network response was not ok');
+      }
+
+      const apiResponse = await response.json();
+      setResults({
+        riskScore: parseFloat(apiResponse.prediction),
+        riskCategory: apiResponse.risk_category,
+        recommendation: apiResponse.recommendation
+      });
+    } catch (error) {
+      // Handle error (e.g., show error message to user)
+      console.error('Error:', error);
+    }
   };
 
   return (

@@ -33,20 +33,28 @@ cd delirium-risk-predictor
 npm install
 ```
 
-4. Run the development server:
+4. Run the frontend server in development mode:
 
 ```bash
 npm run dev -- -p <port>
 ```
 
+5. Run the backend FastAPI server:
 
-5. Open your browser and visit `http://localhost:<port>` to see the application.
+```bash
+poetry install
+cd api/
+uvicorn api.main:app --reload --host 0.0.0.0 --port 8001
+```
+
+6. Open your browser and visit `http://localhost:<port>` to see the application.
 
 ## Project Structure
 
 - `app/page.tsx`: The main page component
 - `components/InputForm.tsx`: The form for inputting patient data
 - `components/ResultsDisplay.tsx`: Displays the risk prediction results
+- `api/`: The backend API endpoints
 - `public/`: Contains static assets like logos
 
 ## Contributing
