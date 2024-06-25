@@ -1,7 +1,9 @@
 """Routes."""
 
 from fastapi import APIRouter
+
 from api.predict import predict
+
 
 router = APIRouter()
 
