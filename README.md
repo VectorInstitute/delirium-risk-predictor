@@ -42,6 +42,7 @@ npm run dev -- -p <port>
 5. Run the backend FastAPI server:
 
 ```bash
+poetry install
 cd api/
 uvicorn api.main:app --reload --host 0.0.0.0 --port 8001
 ```
