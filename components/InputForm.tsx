@@ -1,7 +1,32 @@
 import React, { useState } from 'react'
+import { Tooltip } from 'react-tooltip'
+import 'react-tooltip/dist/react-tooltip.css'
+import './InputForm.css'
 
-function InputForm({ onSubmit }) {
-  const [formData, setFormData] = useState({
+interface FormData {
+  ground_Ambulance: boolean
+  diag_Other_specified_status: boolean
+  diag_Hepatic_failure: boolean
+  diag_Nervous_system_signs_and_symptoms: boolean
+  diag_Other_aftercare_encounter: boolean
+  diag_Parkinsons_disease: boolean
+  diag_Alcohol_related_disorders: boolean
+  diag_Other_specified_and_unspecified_liver_disease: boolean
+  diag_Septicemia: boolean
+  diag_Schizophrenia_spectrum_and_other_psychotic_disorders: boolean
+  diag_Symptoms_of_mental_and_substance_use_conditions: boolean
+  lab_numeric_only_max_Albumin_in_Urine: string
+  diag_Respiratory_failure_insufficiency_arrest: boolean
+  diag_Pressure_ulcer_of_skin: boolean
+  diag_Genitourinary_signs_and_symptoms: boolean
+}
+
+interface InputFormProps {
+  onSubmit: (formData: FormData) => void
+}
+
+function InputForm({ onSubmit }: InputFormProps) {
+  const [formData, setFormData] = useState<FormData>({
     ground_Ambulance: false,
     diag_Other_specified_status: false,
     diag_Hepatic_failure: false,
@@ -19,7 +44,7 @@ function InputForm({ onSubmit }) {
     diag_Genitourinary_signs_and_symptoms: false,
   })
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
     setFormData((prevData) => ({
       ...prevData,
@@ -27,163 +52,59 @@ function InputForm({ onSubmit }) {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit(formData)
   }
 
+  const renderCheckbox = (name: keyof FormData, label: string, description: string) => (
+    <label className="flex items-center">
+      <input
+        type="checkbox"
+        name={name}
+        checked={formData[name] as boolean}
+        onChange={handleChange}
+        className="mr-2 focus:ring-[#7abaff]"
+      />
+      <span data-tooltip-id={`tooltip-${name}`} data-tooltip-content={description}>{label}</span>
+      <Tooltip
+        id={`tooltip-${name}`}
+        className="custom-tooltip"
+        place="right"
+        effect="solid"
+      />
+    </label>
+  )
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="ground_Ambulance"
-            checked={formData.ground_Ambulance}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Ground Ambulance
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Other_specified_status"
-            checked={formData.diag_Other_specified_status}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Other specified status
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Hepatic_failure"
-            checked={formData.diag_Hepatic_failure}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Hepatic failure
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Nervous_system_signs_and_symptoms"
-            checked={formData.diag_Nervous_system_signs_and_symptoms}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Nervous system signs and symptoms
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Other_aftercare_encounter"
-            checked={formData.diag_Other_aftercare_encounter}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Other aftercare encounter
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Parkinsons_disease"
-            checked={formData.diag_Parkinsons_disease}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Parkinson&apos;s disease
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Alcohol_related_disorders"
-            checked={formData.diag_Alcohol_related_disorders}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Alcohol-related disorders
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Other_specified_and_unspecified_liver_disease"
-            checked={
-              formData.diag_Other_specified_and_unspecified_liver_disease
-            }
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Other specified and unspecified liver disease
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Septicemia"
-            checked={formData.diag_Septicemia}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Septicemia
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Schizophrenia_spectrum_and_other_psychotic_disorders"
-            checked={
-              formData.diag_Schizophrenia_spectrum_and_other_psychotic_disorders
-            }
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Schizophrenia spectrum and other psychotic disorders
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Symptoms_of_mental_and_substance_use_conditions"
-            checked={
-              formData.diag_Symptoms_of_mental_and_substance_use_conditions
-            }
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Symptoms of mental and substance use conditions
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Respiratory_failure_insufficiency_arrest"
-            checked={formData.diag_Respiratory_failure_insufficiency_arrest}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Respiratory failure; insufficiency; arrest
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Pressure_ulcer_of_skin"
-            checked={formData.diag_Pressure_ulcer_of_skin}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Pressure ulcer of skin
-        </label>
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="diag_Genitourinary_signs_and_symptoms"
-            checked={formData.diag_Genitourinary_signs_and_symptoms}
-            onChange={handleChange}
-            className="mr-2 focus:ring-[#7abaff]"
-          />
-          Genitourinary signs and symptoms
-        </label>
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Admission Information</h3>
+        {renderCheckbox("ground_Ambulance", "Ground Ambulance", "Patient arrived via ground ambulance transport")}
       </div>
-      <div>
-        <label className="block mb-2">
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Diagnosis Codes</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {renderCheckbox("diag_Other_specified_status", "Other specified status", "Patient has other specified status")}
+          {renderCheckbox("diag_Hepatic_failure", "Hepatic failure", "Patient diagnosed with hepatic failure")}
+          {renderCheckbox("diag_Nervous_system_signs_and_symptoms", "Nervous system signs and symptoms", "Patient shows signs and symptoms related to the nervous system")}
+          {renderCheckbox("diag_Other_aftercare_encounter", "Other aftercare encounter", "Patient admitted for other aftercare")}
+          {renderCheckbox("diag_Parkinsons_disease", "Parkinson's disease", "Patient diagnosed with Parkinson's disease")}
+          {renderCheckbox("diag_Alcohol_related_disorders", "Alcohol-related disorders", "Patient has alcohol-related disorders")}
+          {renderCheckbox("diag_Other_specified_and_unspecified_liver_disease", "Other specified and unspecified liver disease", "Patient has other specified or unspecified liver disease")}
+          {renderCheckbox("diag_Septicemia", "Septicemia", "Patient diagnosed with septicemia")}
+          {renderCheckbox("diag_Schizophrenia_spectrum_and_other_psychotic_disorders", "Schizophrenia spectrum and other psychotic disorders", "Patient has schizophrenia spectrum or other psychotic disorders")}
+          {renderCheckbox("diag_Symptoms_of_mental_and_substance_use_conditions", "Symptoms of mental and substance use conditions", "Patient shows symptoms of mental and substance use conditions")}
+          {renderCheckbox("diag_Respiratory_failure_insufficiency_arrest", "Respiratory failure; insufficiency; arrest", "Patient has respiratory failure, insufficiency, or arrest")}
+          {renderCheckbox("diag_Pressure_ulcer_of_skin", "Pressure ulcer of skin", "Patient has pressure ulcer of skin")}
+          {renderCheckbox("diag_Genitourinary_signs_and_symptoms", "Genitourinary signs and symptoms", "Patient shows genitourinary signs and symptoms")}
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Lab Values</h3>
+        <label className="block">
           Albumin [Mass/volume] in Urine (max):
           <input
             type="number"
@@ -195,6 +116,7 @@ function InputForm({ onSubmit }) {
           />
         </label>
       </div>
+
       <button
         type="submit"
         className="w-full p-2 bg-[#7abaff] text-white rounded hover:bg-[#5a9adf] transition duration-300"

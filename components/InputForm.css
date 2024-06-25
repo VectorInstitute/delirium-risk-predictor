@@ -1,0 +1,33 @@
+.custom-tooltip {
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px 15px;
+  font-size: 14px;
+  max-width: 250px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.custom-tooltip.place-right:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #3498db transparent transparent;
+}
+
+/* Add a subtle gradient to the tooltip */
+.custom-tooltip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  border-radius: 6px;
+  pointer-events: none;
+}

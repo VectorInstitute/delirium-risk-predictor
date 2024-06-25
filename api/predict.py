@@ -111,9 +111,9 @@ def categorize_risk(risk_score: float) -> tuple[str, str]:
     tuple
         A tuple containing the risk category and recommendation.
     """
-    if risk_score < 0.3:
+    if risk_score < 0.5:
         return "Low", "Continue routine monitoring"
-    if risk_score < 0.6:
+    if risk_score < 0.75:
         return "Moderate", "Implement preventive measures"
 
     return "High", "Urgent intervention required"
