@@ -61,5 +61,3 @@ This project is licensed under the Apache 2.0 license.
 
 - [Vector Institute](https://vectorinstitute.ai/)
 - [GEMINI](https://geminimedicine.ca/)
-
-
